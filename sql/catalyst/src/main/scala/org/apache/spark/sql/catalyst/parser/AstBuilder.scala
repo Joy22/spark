@@ -3222,6 +3222,13 @@ class AstBuilder extends SqlBaseBaseVisitor[AnyRef] with SQLConfHelper with Logg
       Option(ctx.pattern).map(string))
   }
 
+  /**
+   * Create a [[ShowVersion]] command.
+   */
+  override def visitShowVersion(ctx: ShowVersionContext): LogicalPlan = withOrigin(ctx) {
+    ShowVersionStatement()
+  }
+
   override def visitColPosition(ctx: ColPositionContext): ColumnPosition = {
     ctx.position.getType match {
       case SqlBaseParser.FIRST => ColumnPosition.first()

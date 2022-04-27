@@ -418,6 +418,11 @@ case class RepairTableStatement(tableName: Seq[String]) extends ParsedStatement
 case class ShowCurrentNamespaceStatement() extends ParsedStatement
 
 /**
+ * A SHOW VERSION statement, as parsed from SQL
+ */
+case class ShowVersionStatement() extends ParsedStatement
+
+/**
  *  CREATE FUNCTION statement, as parsed from SQL
  */
 case class CreateFunctionStatement(

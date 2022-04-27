@@ -487,6 +487,15 @@ case class ShowTables(
 }
 
 /**
+ * The logical plan of the SHOW VERSION command.
+ */
+case class ShowVersion() extends Command {
+  override def output: Seq[Attribute] = Seq(
+    AttributeReference("version", StringType, nullable = false)()
+  )
+}
+
+/**
  * The logical plan of the SHOW VIEWS command.
  *
  * Notes: v2 catalogs do not support views API yet, the command will fallback to

@@ -321,6 +321,9 @@ class DataSourceV2Strategy(session: SparkSession) extends Strategy with Predicat
     case r @ ShowTables(ResolvedNamespace(catalog, ns), pattern) =>
       ShowTablesExec(r.output, catalog.asTableCatalog, ns, pattern) :: Nil
 
+    case r @ ShowVersion() =>
+      ShowVersionExec(r.output, session) :: Nil
+
     case SetCatalogAndNamespace(catalogManager, catalogName, ns) =>
       SetCatalogAndNamespaceExec(catalogManager, catalogName, ns) :: Nil
 
