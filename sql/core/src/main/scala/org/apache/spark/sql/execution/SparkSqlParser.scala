@@ -669,5 +669,10 @@ class SparkSqlAstBuilder extends AstBuilder {
     (ctx.LOCAL != null, finalStorage, Some(DDLUtils.HIVE_PROVIDER))
   }
 
-  override def visitShowVersion()
+  /**
+   * Create a [[ShowVersionCommand]] command.
+   */
+  override def visitShowVersion(ctx: ShowVersionContext): LogicalPlan = withOrigin(ctx) {
+    ShowVersionCommand()
+  }
 }

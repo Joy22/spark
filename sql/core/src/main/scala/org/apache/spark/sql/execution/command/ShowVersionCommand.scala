@@ -14,21 +14,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.spark.sql.execution.datasources.v2
+package org.apache.spark.sql.execution.command
 
-import org.apache.spark.sql.SparkSession
-import org.apache.spark.sql.catalyst.InternalRow
-import org.apache.spark.sql.catalyst.expressions.Attribute
+import org.apache.spark.sql.{Row, SparkSession}
+import org.apache.spark.sql.catalyst.expressions.{Attribute, AttributeReference}
+import org.apache.spark.sql.types.StringType
 
 /**
- * Physical plan node for showing version.
+ * @author joy
  */
-case class ShowVersionExec(output: Seq[Attribute], session: SparkSession)
-  extends V2CommandExec {
-  override protected def run(): Seq[InternalRow] = {
-    val sparkVersion = session.version
+case class ShowVersionCommand() extends RunnableCommand {
+
+  override def output: Seq[Attribute] = Seq(AttributeReference("version", StringType)())
+
+  override def run(sparkSession: SparkSession): Seq[Row] = {
+    val sparkVersion = sparkSession.version
     val javaVersion = System.getProperty("java.version")
     val result = String.format("Spark Version: %s, Java Version: %s", sparkVersion, javaVersion)
-    Seq(InternalRow(result))
+    Seq(Row(result))
   }
 }
